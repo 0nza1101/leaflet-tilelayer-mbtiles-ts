@@ -1,7 +1,9 @@
+This is an updated version of the typescript version of Max Battcher [here](https://gitlab.com/WorldMaker/Leaflet.TileLayer.MBTiles)
+This version adds OS platform detection to make it compatible with iOS and Android, since iOS 9 did not allow local XMLHttpRequest.
+
 # Leaflet.TileLayer.MBTiles
 
 A [LeafletJS](http://www.leafletjs.com) plugin to load tilesets in [`.mbtiles` format](https://github.com/mapbox/mbtiles-spec).
-
 
 ## Demo
 
@@ -72,4 +74,3 @@ can do whatever you want with this stuff. If we meet some day, and you think
 this stuff is worth it, you can buy me a beer in return.
 
 ----------------------------------------------------------------------------
-

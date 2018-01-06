@@ -1,6 +1,6 @@
 {
-  "name": "g",
-  "version": "1.4.2",
+  "name": "leaflet-tilelayer-mbtiles-ts",
+  "version": "1.4.3",
   "description": "Load MBTiles packages into Leaflet maps (Typescript fork)",
   "main": "index.js",
   "author": "Iván Sánchez Ortega <ivan@sanchezortega.es>",
