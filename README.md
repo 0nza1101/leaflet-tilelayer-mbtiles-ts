@@ -1,5 +1,5 @@
 This is an updated version of the typescript version of Max Battcher [here](https://gitlab.com/WorldMaker/Leaflet.TileLayer.MBTiles)
-This version adds OS platform detection to make it compatible with iOS and Android, since iOS 9 did not allow local XMLHttpRequest.
+This version adds OS platform detection to make it compatible with iOS and Android, since fetch didn't support File URI Schema [see](https://github.com/github/fetch/pull/92#issuecomment-140665932)..
 
 # Leaflet.TileLayer.MBTiles
 
