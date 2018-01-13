@@ -79,7 +79,8 @@ L.TileLayer.MBTiles = L.TileLayer.extend({
     _openDB: function (buffer) {
         try {
             /// This assumes the `SQL` global variable to exist!!
-            this._db = new SQL.Database(new Uint8Array(buffer));
+            var uInt8Array = new Uint8Array(buffer);
+            this._db = new SQL.Database(uInt8Array);
             this._stmt = this._db.prepare('SELECT tile_data FROM tiles WHERE zoom_level = :z AND tile_column = :x AND tile_row = :y');
             // Load some metadata (or at least try to)
             var metaStmt = this._db.prepare('SELECT value FROM metadata WHERE name = :key');
