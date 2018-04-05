@@ -1,6 +1,5 @@
 import * as SQL from 'sql.js';
 import * as L from 'leaflet';
-import * as platform from 'platform';
 
 /*
 
@@ -39,7 +38,7 @@ export class Utils {
     this._databaseIsLoaded = false;
     if (typeof databaseUrl === 'string') {
 
-      if (platform.os.family == 'Android') {
+      if (L.Browser.android) {
         Utils.fetchLocal(databaseUrl).then(response => {
           //console.log("Response: ", response);
           return response.arrayBuffer();
