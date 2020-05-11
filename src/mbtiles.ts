@@ -1,10 +1,9 @@
-import { SqlJs } from 'sql.js/module';
-import initSqlJs from "sql.js";
+import * as SQL from 'sql.js';
 
 export default class MBTiles {
 
     private initialized: boolean;
-    private db: SqlJs.Database;
+    private db: SQL.Database;
 
     private metadataStmt = this.db.prepare(
         'SELECT value FROM metadata WHERE name = :key'
@@ -16,12 +15,12 @@ export default class MBTiles {
 
     constructor(buffer: ArrayBuffer) {
         const uInt8Array = new Uint8Array(buffer);
-        initSqlJs()
-            .then(SQL => {
-                this.db = new SQL.Database(uInt8Array)
-                this.initialized = true;
-            })
-            .catch(err => { throw new Error(err) });
+        try {
+            this.db = new SQL.Database(uInt8Array);
+            this.initialized = true;
+        } catch (e) {
+            throw e;
+        }
     }
 
     public get isLoaded(): boolean {
