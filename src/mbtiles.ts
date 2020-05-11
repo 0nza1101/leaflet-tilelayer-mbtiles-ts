@@ -5,18 +5,19 @@ export default class MBTiles {
     private initialized: boolean;
     private db: SQL.Database;
 
-    private metadataStmt = this.db.prepare(
-        'SELECT value FROM metadata WHERE name = :key'
-    );
-
-    private tilesStmt = this.db.prepare(
-        'SELECT tile_data FROM tiles WHERE tile_column = :x AND tile_row = :y AND zoom_level = :z'
-    );
+    private metadataStmt: SQL.Statement;
+    private tilesStmt: SQL.Statement;
 
     constructor(buffer: ArrayBuffer) {
         const uInt8Array = new Uint8Array(buffer);
         try {
             this.db = new SQL.Database(uInt8Array);
+            this.metadataStmt = this.db.prepare(
+                'SELECT value FROM metadata WHERE name = :key'
+            );
+            this.tilesStmt = this.db.prepare(
+                'SELECT tile_data FROM tiles WHERE tile_column = :x AND tile_row = :y AND zoom_level = :z'
+            );
             this.initialized = true;
         } catch (e) {
             throw e;
