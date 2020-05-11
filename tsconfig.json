@@ -1,8 +1,11 @@
 {
     "compilerOptions": {
-        "noImplicitAny": false,
-        "target": "es2015",
-        "module": "commonjs",
-        "moduleResolution": "node"
-    }
+        "sourceMap": false,
+        "target": "es2017",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "outDir": "./dist",
+        "pretty": true,
+    },
+    "include": ["./src/**/*.ts"]
 }

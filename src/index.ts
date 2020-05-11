@@ -1,5 +1,8 @@
-import * as SQL from 'sql.js';
 import * as L from 'leaflet';
+
+import Utils from './utils';
+import  MBTiles  from './mbtiles';
+
 
 /*
 
@@ -11,106 +14,70 @@ If they exist in the given file, it will handle the following metadata rows:
 
 */
 
-export class Utils {
-
-  public static fetchLocal(url) {
-    return new Promise<any>((resolve, reject) => {
-      var xhr = new XMLHttpRequest
-      xhr.responseType = 'arraybuffer';
-
-      xhr.onload = function() {
-        resolve(new Response(xhr.response, { status: xhr.status }))
-      }
-      xhr.onerror = function() {
-        reject(new TypeError('Local request failed'))
-      }
-      xhr.open('GET', url)
-      xhr.send(null)
-    })
-  }
-}
-
 (L.TileLayer as any).MBTiles = L.TileLayer.extend({
-
-
-  initialize: function(databaseUrl: string | ArrayBuffer, options?: L.TileLayerOptions) {
-
+  initialize: function (databaseUrl: string | ArrayBuffer, options?: L.TileLayerOptions) {
+  
     this._databaseIsLoaded = false;
     if (typeof databaseUrl === 'string') {
-
       if (L.Browser.android) {
-        Utils.fetchLocal(databaseUrl).then(response => {
-          //console.log("Response: ", response);
-          return response.arrayBuffer();
-        }).then(buffer => {
-          //console.log("This: ", this);
-          this._openDB(buffer);
-        }).catch(err => {
-          this.fire('databaseerror', { error: err });
-        })
+        Utils.fetchLocal(databaseUrl)
+          .then(response => response.arrayBuffer())
+          .then(buffer => this.openMBTile(buffer))
+          .catch(err => this.fire('databaseerror', { error: err }));
+      } else {
+        fetch(databaseUrl)
+          .then(response => response.arrayBuffer())
+          .then(buffer => this.openMBTile(buffer))
+          .catch(err => this.fire('databaseerror', { error: err }));
       }
-      else {
-        fetch(databaseUrl).then(response => {
-          return response.arrayBuffer();
-        }).then(buffer => {
-          this._openDB(buffer);
-        }).catch(err => {
-          this.fire('databaseerror', { error: err });
-        })
-      }
-
     } else if (databaseUrl instanceof ArrayBuffer) {
-      this._openDB(databaseUrl);
+      this.openMBTile(databaseUrl);
     } else {
       this.fire('databaseerror');
     }
 
     this.on('tileunload', (event: any) => {
       if (event.tile && event.tile.src != L.Util.emptyImageUrl) {
-        URL.revokeObjectURL(event.tile.src)
+        URL.revokeObjectURL(event.tile.src);
       }
-    })
+    });
 
-    const closeDb = () => this._db.close()
+    const closeDb = () => this._mbtiles.close();
     this.on('remove', () => {
       if (this._databaseIsLoaded) {
         closeDb()
       } else {
         this.on('databaseloaded', closeDb)
       }
-    })
+    });
 
     return (L.TileLayer.prototype as any).initialize.call(this, '', options);
   },
 
-  _openDB: function(buffer: ArrayBuffer) {
+  openMBTile: function (buffer: ArrayBuffer) {
     try {
-      /// This assumes the `SQL` global variable to exist!!
-      var uInt8Array = new Uint8Array(buffer);
-      this._db = new SQL.Database(uInt8Array);
-      this._stmt = this._db.prepare('SELECT tile_data FROM tiles WHERE zoom_level = :z AND tile_column = :x AND tile_row = :y');
+      this._mbtiles = new MBTiles(buffer);
 
-      // Load some metadata (or at least try to)
-      var metaStmt = this._db.prepare('SELECT value FROM metadata WHERE name = :key');
-      var row;
+      const attribution = this._mbtiles.attribution
+      if (attribution) {
+        this.options.attribution = attribution;
+      }
 
-      row = metaStmt.getAsObject({ ':key': 'attribution' });
-      if (row.value) { this.options.attribution = row.value; }
+      const minZoom = this._mbtiles.minZoom;
+      if (minZoom) {
+        this.options.minZoom = minZoom;
+      }
 
-      row = metaStmt.getAsObject({ ':key': 'minzoom' });
-      if (row.value) { this.options.minZoom = Number(row.value); }
+      const maxZoom = this._mbtiles.maxZoom;
+      if (maxZoom) {
+        this.options.maxZoom = maxZoom;
+      }
 
-      row = metaStmt.getAsObject({ ':key': 'maxzoom' });
-      if (row.value) { this.options.maxZoom = Number(row.value); }
-
-      row = metaStmt.getAsObject({ ':key': 'format' });
-      if (row.value && row.value === 'png') {
-        this._format = 'image/png'
-      } else if (row.value && row.value === 'jpg') {
-        this._format = 'image/jpg'
+      const format = this._mbtiles.format;
+      if (format) {
+        this._format = `image/${format}`;
       } else {
-        // Fall back to PNG, hope it works.
-        this._format = 'image/png'
+        this._format = 'image/png';
       }
 
       // 🍂event databaseloaded
@@ -126,9 +93,7 @@ export class Utils {
     }
   },
 
-
-
-  createTile: function(coords: any, done: any) {
+  createTile: function (coords: any, done: any) {
     var tile = document.createElement('img');
 
     if (this.options.crossOrigin) {
@@ -155,7 +120,7 @@ export class Utils {
 
       tile.src = this.getTileUrl(coords);
     } else {
-      this.on('databaseloaded', function() {
+      this.on('databaseloaded', function () {
         L.DomEvent.on(tile, 'load', L.Util.bind(this._tileOnLoad, this, done, tile));
         L.DomEvent.on(tile, 'error', L.Util.bind(this._tileOnError, this, done, tile));
 
@@ -167,24 +132,17 @@ export class Utils {
   },
 
 
-  getTileUrl: function(coords: any) {
-
+  getTileUrl: function (coords: {x: number, y:number, z: number}) {
     // Luckily, SQL execution is synchronous. If not, this code would get
     // much more complicated.
-    var row = this._stmt.getAsObject({
-      ':x': coords.x,
-      ':y': this._globalTileRange.max.y - coords.y,
-      ':z': coords.z
-    });
+    var data = this._mbtiles.getTile(coords.x, this._globalTileRange.max.y - coords.y, coords.z);
 
-    if ('tile_data' in row) {
-      return window.URL.createObjectURL(new Blob([row.tile_data], { type: this._format }));
+    if (data) {
+      return window.URL.createObjectURL(new Blob([data], { type: this._format }));
     } else {
       return L.Util.emptyImageUrl;
     }
-  },
-
-
+  }
 });
 
 
@@ -195,6 +153,6 @@ Returns a new `L.TileLayer.MBTiles`, fetching and using the database given in `d
 🍂factory tileLayer.mbTiles(databaseBuffer: Uint8Array, options: TileLayer options)
 Returns a new `L.TileLayer.MBTiles`, given a MBTiles database as a javascript binary array.
 */
-(L.tileLayer as any).mbTiles = function(databaseUrl: string | ArrayBuffer, options?: L.TileLayerOptions) {
+(L.tileLayer as any).mbTiles = function (databaseUrl: string | ArrayBuffer, options?: L.TileLayerOptions) {
   return new (L.TileLayer as any).MBTiles(databaseUrl, options);
 }

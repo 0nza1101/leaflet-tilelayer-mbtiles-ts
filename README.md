@@ -13,7 +13,7 @@ The following demo loads a ~9.6MB `.mbtiles` file with the "countries" style fro
 
 ## Compatibility
 
-[LeafletJS](http://www.leafletjs.com) 1.0.1 (or newer), [sql.js](https://github.com/kripken/sql.js/) 0.3.2 (or newer), and a web browser that supports:
+[LeafletJS](http://www.leafletjs.com) 1.0.1 (or newer), [sql.js](https://github.com/sql-js/sql.js) 0.5.0 and a web browser that supports:
 
 * [`Blob`s](https://developer.mozilla.org/en-US/docs/Web/API/Blob)
 * [`URL.createObjectURL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL)
@@ -27,14 +27,14 @@ Any recent version of Firefox, Chrome or Safari should work without problems. IE
 Include Leaflet in your HTML, like:
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
 ```
 
-Include the [`sql.js` library](https://github.com/kripken/sql.js/), like:
+Include the [`sql.js` library](https://github.com/sql-js/sql.js), like:
 
 ```html
-<script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></script>
+<script src="https://unpkg.com/sql.js@0.5.0/js/sql.js"></script>
 ```
 
 Include Leaflet.TileLayer.MBTiles, like:
