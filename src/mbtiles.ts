@@ -6,6 +6,7 @@ export default class MBTiles {
     private db: SQL.Database;
 
     private metadataStmt: SQL.Statement;
+
     private tilesStmt: SQL.Statement;
 
     constructor(buffer: ArrayBuffer) {
@@ -72,17 +73,16 @@ export default class MBTiles {
         return value ? value : null;
     }
 
-
     public get minZoom(): number {
-        const value = this.getMetadata('minZoom').value.toString();
+        const value = this.getMetadata('minZoom').value;
 
-        return value ? parseInt(value, 10) : null;
+        return value ? Number(value) : null;
     }
 
     public get maxZoom(): number {
-        const value = this.getMetadata('maxZoom').value.toString();
+        const value = this.getMetadata('maxZoom').value;
 
-        return value ? parseInt(value, 10) : null;
+        return value ? Number(value) : null;
     }
 
     public get name(): string {

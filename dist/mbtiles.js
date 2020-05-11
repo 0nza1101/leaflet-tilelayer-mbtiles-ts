@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const SQL = require("sql.js");
 class MBTiles {
     constructor(buffer) {
-        this.metadataStmt = this.db.prepare('SELECT value FROM metadata WHERE name = :key');
-        this.tilesStmt = this.db.prepare('SELECT tile_data FROM tiles WHERE tile_column = :x AND tile_row = :y AND zoom_level = :z');
         const uInt8Array = new Uint8Array(buffer);
         try {
             this.db = new SQL.Database(uInt8Array);
+            this.metadataStmt = this.db.prepare('SELECT value FROM metadata WHERE name = :key');
+            this.tilesStmt = this.db.prepare('SELECT tile_data FROM tiles WHERE tile_column = :x AND tile_row = :y AND zoom_level = :z');
             this.initialized = true;
         }
         catch (e) {
@@ -50,12 +50,12 @@ class MBTiles {
         return value ? value : null;
     }
     get minZoom() {
-        const value = this.getMetadata('minZoom').value.toString();
-        return value ? parseInt(value, 10) : null;
+        const value = this.getMetadata('minZoom').value;
+        return value ? Number(value) : null;
     }
     get maxZoom() {
-        const value = this.getMetadata('maxZoom').value.toString();
-        return value ? parseInt(value, 10) : null;
+        const value = this.getMetadata('maxZoom').value;
+        return value ? Number(value) : null;
     }
     get name() {
         const value = this.getMetadata('name').value.toString();
