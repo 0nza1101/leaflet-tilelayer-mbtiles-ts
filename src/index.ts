@@ -1,8 +1,7 @@
-import * as L from 'leaflet';
-
 import Utils from './utils';
-import  MBTiles  from './mbtiles';
+import MBTiles from './mbtiles';
 
+declare var L: any;
 
 /*
 
@@ -16,7 +15,7 @@ If they exist in the given file, it will handle the following metadata rows:
 
 (L.TileLayer as any).MBTiles = L.TileLayer.extend({
   initialize: function (databaseUrl: string | ArrayBuffer, options?: L.TileLayerOptions) {
-  
+
     this._databaseIsLoaded = false;
     if (typeof databaseUrl === 'string') {
       if (L.Browser.android) {
@@ -132,7 +131,7 @@ If they exist in the given file, it will handle the following metadata rows:
   },
 
 
-  getTileUrl: function (coords: {x: number, y:number, z: number}) {
+  getTileUrl: function (coords: { x: number, y: number, z: number }) {
     // Luckily, SQL execution is synchronous. If not, this code would get
     // much more complicated.
     var data = this._mbtiles.getTile(coords.x, this._globalTileRange.max.y - coords.y, coords.z);

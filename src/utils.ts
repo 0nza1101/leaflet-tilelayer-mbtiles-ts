@@ -9,7 +9,7 @@ export default class Utils {
                 resolve(new Response(xhr.response, { status: xhr.status }))
             }
             xhr.onerror = function () {
-                reject(new TypeError('Local request failed'))
+                reject(new Error('Local request failed'))
             }
             xhr.open('GET', url)
             xhr.send(null)

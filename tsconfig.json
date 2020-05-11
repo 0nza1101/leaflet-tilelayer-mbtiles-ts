@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
+        "noImplicitAny": true,
         "sourceMap": false,
-        "target": "es2017",
-        "module": "esnext",
+        "target": "es2015",
+        "module": "commonjs",
         "moduleResolution": "node",
         "outDir": "./dist",
         "pretty": true,
