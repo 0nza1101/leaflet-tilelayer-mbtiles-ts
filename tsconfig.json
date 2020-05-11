@@ -6,7 +6,7 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "outDir": "./dist",
-        "pretty": true,
+        "pretty": true
     },
     "include": ["./src/**/*.ts"]
 }
