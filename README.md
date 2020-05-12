@@ -32,7 +32,11 @@ Include Leaflet in your HTML, like:
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
 ```
-or like :
+```typescript
+declare var L: any;
+```
+
+or in your typescript like :
 
 ```typescript
 import * as L from 'leaflet';
@@ -42,10 +46,10 @@ or like :
 
 ```typescript
 import 'leaflet';
+declare var L: any;
 ```
 
-
-Include Leaflet.TileLayer.MBTiles, like:
+Then include Leaflet.TileLayer.MBTiles, like:
 
 ```ts
 import 'leaflet-tilelayer-mbtiles-ts';
