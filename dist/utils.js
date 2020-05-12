@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class Utils {
-    static fetchLocal(url) {
-        return new Promise((resolve, reject) => {
+var Utils = /** @class */ (function () {
+    function Utils() {
+    }
+    Utils.fetchLocal = function (url) {
+        return new Promise(function (resolve, reject) {
             var xhr = new XMLHttpRequest;
             xhr.responseType = 'arraybuffer';
             xhr.onload = function () {
@@ -14,6 +16,7 @@ class Utils {
             xhr.open('GET', url);
             xhr.send(null);
         });
-    }
-}
+    };
+    return Utils;
+}());
 exports.default = Utils;

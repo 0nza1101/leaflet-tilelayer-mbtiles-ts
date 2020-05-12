@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const utils_1 = require("./utils");
-const mbtiles_1 = require("./mbtiles");
+var utils_1 = require("./utils");
+var mbtiles_1 = require("./mbtiles");
 /*
 
 🍂class TileLayer.MBTiles
@@ -13,19 +13,20 @@ If they exist in the given file, it will handle the following metadata rows:
 */
 L.TileLayer.MBTiles = L.TileLayer.extend({
     initialize: function (databaseUrl, options) {
+        var _this = this;
         this._databaseIsLoaded = false;
         if (typeof databaseUrl === 'string') {
             if (L.Browser.android) {
                 utils_1.default.fetchLocal(databaseUrl)
-                    .then(response => response.arrayBuffer())
-                    .then(buffer => this.openMBTile(buffer))
-                    .catch(err => this.fire('databaseerror', { error: err }));
+                    .then(function (response) { return response.arrayBuffer(); })
+                    .then(function (buffer) { return _this.openMBTile(buffer); })
+                    .catch(function (err) { return _this.fire('databaseerror', { error: err }); });
             }
             else {
                 fetch(databaseUrl)
-                    .then(response => response.arrayBuffer())
-                    .then(buffer => this.openMBTile(buffer))
-                    .catch(err => this.fire('databaseerror', { error: err }));
+                    .then(function (response) { return response.arrayBuffer(); })
+                    .then(function (buffer) { return _this.openMBTile(buffer); })
+                    .catch(function (err) { return _this.fire('databaseerror', { error: err }); });
             }
         }
         else if (databaseUrl instanceof ArrayBuffer) {
@@ -34,18 +35,18 @@ L.TileLayer.MBTiles = L.TileLayer.extend({
         else {
             this.fire('databaseerror');
         }
-        this.on('tileunload', (event) => {
+        this.on('tileunload', function (event) {
             if (event.tile && event.tile.src != L.Util.emptyImageUrl) {
                 URL.revokeObjectURL(event.tile.src);
             }
         });
-        const closeDb = () => this._mbtiles.close();
-        this.on('remove', () => {
-            if (this._databaseIsLoaded) {
+        var closeDb = function () { return _this._mbtiles.close(); };
+        this.on('remove', function () {
+            if (_this._databaseIsLoaded) {
                 closeDb();
             }
             else {
-                this.on('databaseloaded', closeDb);
+                _this.on('databaseloaded', closeDb);
             }
         });
         return L.TileLayer.prototype.initialize.call(this, '', options);
@@ -53,21 +54,21 @@ L.TileLayer.MBTiles = L.TileLayer.extend({
     openMBTile: function (buffer) {
         try {
             this._mbtiles = new mbtiles_1.default(buffer);
-            const attribution = this._mbtiles.attribution;
+            var attribution = this._mbtiles.attribution;
             if (attribution) {
                 this.options.attribution = attribution;
             }
-            const minZoom = this._mbtiles.minZoom;
+            var minZoom = this._mbtiles.minZoom;
             if (minZoom) {
                 this.options.minZoom = minZoom;
             }
-            const maxZoom = this._mbtiles.maxZoom;
+            var maxZoom = this._mbtiles.maxZoom;
             if (maxZoom) {
                 this.options.maxZoom = maxZoom;
             }
-            const format = this._mbtiles.format;
+            var format = this._mbtiles.format;
             if (format) {
-                this._format = `image/${format}`;
+                this._format = "image/" + format;
             }
             else {
                 this._format = 'image/png';
