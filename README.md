@@ -1,17 +1,17 @@
 This is an updated version of the typescript version of Max Battcher [here](https://gitlab.com/WorldMaker/Leaflet.TileLayer.MBTiles)
 This version adds OS platform detection to make it compatible with iOS and Android, since fetch didn't support File URI Schema [see](https://github.com/github/fetch/pull/92#issuecomment-140665932)..
 
-This package is intended to be used inside a typescript project.
-
 # Leaflet.TileLayer.MBTiles
 
 A [LeafletJS](http://www.leafletjs.com) plugin to load tilesets in [`.mbtiles` format](https://github.com/mapbox/mbtiles-spec).
 
-## Demo
+## Exemple
 
 The following demo loads a ~9.6MB `.mbtiles` file with the "countries" style from the good ol' Tilemill:
 
-[http://ivansanchez.gitlab.io/Leaflet.TileLayer.MBTiles/demo/demo.html](http://ivansanchez.gitlab.io/Leaflet.TileLayer.MBTiles/demo/demo.html)
+* Clone this repository: https://github.com/0nza1101/leaflet-tilelayer-mbtiles-ts.git
+* Run `npm install` from the project root.
+* `npm start`
 
 ## Compatibility
 
@@ -32,24 +32,30 @@ Include Leaflet in your HTML, like:
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
 ```
+or like :
 
-Include the [`sql.js` library](https://github.com/sql-js/sql.js), like:
-
-```html
-<script src="https://unpkg.com/sql.js@0.5.0/js/sql.js"></script>
+```typescript
+import * as L from 'leaflet';
 ```
+
+or like :
+
+```typescript
+import 'leaflet';
+```
+
 
 Include Leaflet.TileLayer.MBTiles, like:
 
-```html
-<script src="https://unpkg.com/leaflet.tilelayer.mbtiles@latest/Leaflet.TileLayer.MBTiles.js"></script>
+```ts
+import 'leaflet-tilelayer-mbtiles-ts';
 ```
 
 Once everything is loaded, you can instantiate `L.TileLayer.MBTiles` just by providing
 the URL to a `.mbtiles` database:
 
 ```js
-var mb = L.tileLayer.mbTiles('http://server/something/cool-stuff.mbtiles').addTo(map);
+const mb = L.tileLayer.mbTiles('http://server/something/cool-stuff.mbtiles').addTo(map);
 ```
 
 ## Extra metadata handling
