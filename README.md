@@ -26,7 +26,9 @@ Any recent version of Firefox, Chrome or Safari should work without problems. IE
 
 ## Usage
 
-Include Leaflet in your HTML, like:
+`npm i leaflet leaflet-tilelayer-mbtiles-ts --save`
+
+Include Leaflet like:
 
 ```html
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
@@ -36,7 +38,7 @@ Include Leaflet in your HTML, like:
 declare var L: any;
 ```
 
-or in your typescript like :
+or like :
 
 ```typescript
 import * as L from 'leaflet';
