@@ -1,7 +1,7 @@
 This is an updated version of the typescript version of Max Battcher [here](https://gitlab.com/WorldMaker/Leaflet.TileLayer.MBTiles)
 This version adds OS platform detection to make it compatible with iOS and Android, since fetch didn't support File URI Schema [see](https://github.com/github/fetch/pull/92#issuecomment-140665932)..
 
-# Leaflet.TileLayer.MBTiles
+# Leaflet.TileLayer.MBTiles [![NPM version][npm-image]][npm-url]
 
 A [LeafletJS](http://www.leafletjs.com) plugin to load tilesets in [`.mbtiles` format](https://github.com/mapbox/mbtiles-spec).
 
@@ -88,3 +88,6 @@ can do whatever you want with this stuff. If we meet some day, and you think
 this stuff is worth it, you can buy me a beer in return.
 
 ----------------------------------------------------------------------------
+
+[npm-image]: https://badge.fury.io/js/leaflet-tilelayer-mbtiles-ts.svg
+[npm-url]: https://www.npmjs.com/package/lleaflet-tilelayer-mbtiles-ts

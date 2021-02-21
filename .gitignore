@@ -1,1 +1,15 @@
+# Dependencies
 node_modules
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# IDE - VSCode
+.vscode/*
+.history/*
+
+# misc
+npm-debug.log
+yarn-error.log
+
