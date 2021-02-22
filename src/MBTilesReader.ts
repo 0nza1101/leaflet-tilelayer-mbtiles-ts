@@ -1,6 +1,6 @@
 import * as SQL from 'sql.js';
 
-export default class MBTiles {
+export default class MBTilesReader {
 
     private initialized: boolean;
     private db: SQL.Database;

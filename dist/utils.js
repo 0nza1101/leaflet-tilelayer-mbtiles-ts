@@ -5,15 +5,15 @@ var Utils = /** @class */ (function () {
     }
     Utils.fetchLocal = function (url) {
         return new Promise(function (resolve, reject) {
-            var xhr = new XMLHttpRequest;
-            xhr.responseType = 'arraybuffer';
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = "arraybuffer";
             xhr.onload = function () {
                 resolve(new Response(xhr.response, { status: xhr.status }));
             };
             xhr.onerror = function () {
-                reject(new Error('Local request failed'));
+                reject(new Error("Local request failed"));
             };
-            xhr.open('GET', url);
+            xhr.open("GET", url);
             xhr.send(null);
         });
     };

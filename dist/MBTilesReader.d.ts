@@ -1,4 +1,4 @@
-export default class MBTiles {
+export default class MBTilesReader {
     private initialized;
     private db;
     private metadataStmt;
