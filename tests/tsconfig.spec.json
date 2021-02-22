@@ -1,0 +1,15 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "sourceMap": false,
+        "target": "es5",
+        "module": "commonjs",
+        "outDir": "../out-tsc/spec",
+    },
+    "include": [
+        "./jest-setup.ts",
+        "**/*.spec.ts",
+        "**/*.d.ts",
+        "**/*.mock.ts"
+    ]
+}
