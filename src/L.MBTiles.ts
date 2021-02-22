@@ -9,20 +9,26 @@ export enum MBTilesEvent {
 
 type TooglableEvent = { [event: string]: (event?: any) => void }
 
-export default class MBTiles /*extends L.TileLayer*/ {
+/**
+ * Builds the MBTiles tileLayer
+ * @class
+ * @extends {L.TileLayer}
+ */
+export default class MBTiles extends L.TileLayer {
 
-    public options: any = null;
-
+    public _map: L.Map = null
     private _mbTilesReader: MBTilesReader = null;
     private _imageFormat: string = null;
     private _globalEvents: TooglableEvent = null;
 
-    initialize(databaseUrl: string | ArrayBuffer, options: L.TileLayerOptions) {
-        this._mbTilesReader = null;
+    constructor(urlOrData: string | ArrayBuffer, options: L.TileLayerOptions = {}) {
+        super(urlOrData as string, options);
+    }
+
+    initialize(urlOrData: string | ArrayBuffer, options: L.TileLayerOptions) {
         L.Util.setOptions(this, options);
-        this._loadMBTiles(databaseUrl);
+        this._loadMBTiles(urlOrData);
         this._toggleEvents(true);
-        // return (L.TileLayer.prototype as any).initialize.call(this, '', options);
     }
 
     createTile(coords: L.Coords, done: L.DoneCallback) {
@@ -47,14 +53,17 @@ export default class MBTiles /*extends L.TileLayer*/ {
         // In TileLayer.MBTiles, the getTileUrl() method can only be called when
         // the database has already been loaded.
         if (this._mbTilesReader && this._mbTilesReader.isLoaded) {
-            L.DomEvent.on(tile, 'load', L.Util.bind((<any>this)._tileOnLoad, this, done, tile));
-            L.DomEvent.on(tile, 'error', L.Util.bind((<any>this)._tileOnError, this, done, tile));
+            console.log('there')
+            L.DomEvent.on(tile, 'load', L.Util.bind(this._tileOnLoad, this, done, tile));
+            L.DomEvent.on(tile, 'error', L.Util.bind(this._tileOnError, this, done, tile));
 
             tile.src = this.getTileUrl(coords);
         } else {
-            (<any>this).on(MBTilesEvent.LOADED, function () {
-                L.DomEvent.on(tile, 'load', L.Util.bind((<any>this)._tileOnLoad, this, done, tile));
-                L.DomEvent.on(tile, 'error', L.Util.bind((<any>this)._tileOnError, this, done, tile));
+            this.on(MBTilesEvent.LOADED, function () {
+                console.log('herre')
+                console.log(this)
+                L.DomEvent.on(tile, 'load', L.Util.bind(this._tileOnLoad, this, done, tile));
+                L.DomEvent.on(tile, 'error', L.Util.bind(this._tileOnError, this, done, tile));
     
                 tile.src = this.getTileUrl(coords);
             }.bind(this));
@@ -64,7 +73,7 @@ export default class MBTiles /*extends L.TileLayer*/ {
     }
 
     getTileUrl(coords: L.Coords) {
-        // const globalTileRange = this.map.getPixelWorldBounds((<any>this)._tileZoom);
+        // const globalTileRange = this.map.getPixelWorldBounds(this._tileZoom);
         const data = this._mbTilesReader.getTile(coords.x, (<any>this)._globalTileRange.max.y - coords.y, coords.z);
 
         if (data) {
@@ -81,12 +90,12 @@ export default class MBTiles /*extends L.TileLayer*/ {
                 const buffer = await response.arrayBuffer();
                 this._openMBTile(buffer);
             } catch (err) {
-                (<any>this).fire(MBTilesEvent.ERROR, { error: err });
+                this.fire(MBTilesEvent.ERROR, { error: err });
             }
         } else if (urlOrData instanceof ArrayBuffer) {
             this._openMBTile(urlOrData);
         } else {
-            (<any>this).fire(MBTilesEvent.ERROR);
+            this.fire(MBTilesEvent.ERROR);
         }
     }
 
@@ -116,9 +125,9 @@ export default class MBTiles /*extends L.TileLayer*/ {
                 this._imageFormat = 'image/png';
             }
 
-            (<any>this).fire(MBTilesEvent.LOADED);
+            this.fire(MBTilesEvent.LOADED);
         } catch (err) {
-            (<any>this).fire(MBTilesEvent.ERROR, { error: err });
+            this.fire(MBTilesEvent.ERROR, { error: err });
         }
     }
 
@@ -141,7 +150,7 @@ export default class MBTiles /*extends L.TileLayer*/ {
         }
         for (const e in this._globalEvents) {
             if (this._globalEvents.hasOwnProperty(e)) {
-                (<any>this)[bind ? 'on' : 'off'](e, this._globalEvents[e])
+                this[bind ? 'on' : 'off'](e, this._globalEvents[e])
             }
         }
     }
@@ -158,7 +167,7 @@ export default class MBTiles /*extends L.TileLayer*/ {
             this._toggleEvents(false);
             this._mbTilesReader = null;
         } else {
-            (<any>this).on(MBTilesEvent.LOADED, this._shutdown);
+            this.on(MBTilesEvent.LOADED, this._shutdown);
         }
     }
 }

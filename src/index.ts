@@ -1,9 +1,18 @@
-import MBTiles from './L.MBTiles';
+import _MBTiles from './L.MBTiles';
 
 declare var L: any;
 
-L.TileLayer.MBTiles = L.TileLayer.extend(new MBTiles());
-export const mbTiles = function (databaseUrl: string | ArrayBuffer, options?: L.TileLayerOptions) {
-  return new (L.TileLayer as any).MBTiles(databaseUrl, options);
-};
-L.tileLayer.mbTiles = mbTiles;
+/**
+ * A factory for L.TileLayer.MBTiles
+ * @param {string | ArrayBuffer} urlOrData
+ * @param {L.TileLayerOptions} opts
+ * @returns {MBTiles}
+ */
+const _mbTiles = (urlOrData: string | ArrayBuffer , opts: L.TileLayerOptions) => Reflect.construct(_MBTiles, [urlOrData, opts]);
+
+L.TileLayer.MBTiles = _MBTiles;
+L.tileLayer.mbTiles = _mbTiles;
+
+export const MBTiles =  _MBTiles;
+export const mbTiles = _mbTiles;
+export default { MBTiles, mbTiles };
