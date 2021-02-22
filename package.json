@@ -3,7 +3,7 @@
   "version": "1.5.6",
   "description": "Load MBTiles packages into Leaflet maps (Typescript fork)",
   "main": "./dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "./dist/index.d.ts",
   "author": "Iván Sánchez Ortega <ivan@sanchezortega.es>",
   "contributors": [
     "Max Battcher <me@worldmaker.net>",
@@ -15,22 +15,22 @@
     "type": "git"
   },
   "scripts": {
-    "start": "webpack-dev-server --config ./exemples/webpack.config.js --watch ",
+    "start": "webpack serve  --progress --config ./exemple/webpack.config.js",
     "build": "tsc -p .",
     "publish": "npm run build && npm publish"
   },
   "devDependencies": {
-    "html-webpack-plugin": "^4.3.0",
-    "leaflet": "^1.6.0",
-    "ts-loader": "^8.0.2",
-    "typescript": "^4.0.2",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "html-webpack-plugin": "5.2.0",
+    "leaflet": "1.7.1",
+    "ts-loader": "8.0.17",
+    "typescript": "4.1.5",
+    "webpack": "5.23.0",
+    "webpack-cli": "4.5.0",
+    "webpack-dev-server": "3.11.2"
   },
   "dependencies": {
-    "@types/leaflet": "^1.5.17",
+    "@types/leaflet": "1.5.23",
     "@types/sql.js": "0.0.29",
-    "sql.js": "^0.5.0"
+    "sql.js": "0.5.0"
   }
 }
