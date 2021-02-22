@@ -1,5 +1,8 @@
+dist/
+
 # Dependencies
 node_modules
+coverage
 
 # System Files
 .DS_Store
