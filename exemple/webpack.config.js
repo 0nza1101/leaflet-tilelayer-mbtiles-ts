@@ -1,19 +1,21 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const publicPath = path.resolve(__dirname, './');
-const srcPath = path.resolve(__dirname, './');
-const buildPath = path.resolve(__dirname, './');
+const publicPath = path.resolve(__dirname, './public/');
+const srcPath = path.resolve(__dirname, './src/');
 
 module.exports = {
+    mode: 'development',
     entry: path.join(srcPath, 'index.ts'),
     output: {
-        path: buildPath,
+        path: publicPath,
         filename: 'bundle.js'
     },
     devServer: {
-        contentBase: buildPath,
-        compress: true
+        contentBase: publicPath,
+        compress: true,
+        compress: true,
+        hot: true,
     },
     module: {
         rules: [{
@@ -22,11 +24,13 @@ module.exports = {
             loader: 'ts-loader'
         }]
     },
-    node: {
-        fs: "empty"
-    },
     resolve: {
-        extensions: ['*', '.js', '.ts']
+        extensions: ['*', '.js', '.ts'],
+        fallback: {
+            "crypto": false,
+            "fs": false,
+            "path": false
+        }
     },
     devtool: 'inline-source-map',
     plugins: [
