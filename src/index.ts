@@ -1,4 +1,4 @@
-import _MBTiles from './L.MBTiles';
+import _MBTiles from './MBTiles';
 
 declare var L: any;
 
