@@ -1,4 +1,5 @@
-import _MBTiles from './MBTiles';
+import _MBTiles, { MBTilesEvents as _MBTilesEvents } from './MBTiles';
+
 
 declare var L: any;
 
@@ -15,4 +16,5 @@ L.tileLayer.mbTiles = _mbTiles;
 
 export const MBTiles =  _MBTiles;
 export const mbTiles = _mbTiles;
-export default { MBTiles, mbTiles };
+export const MBTilesEvents = _MBTilesEvents;
+export default { MBTiles, mbTiles, MBTilesEvents };

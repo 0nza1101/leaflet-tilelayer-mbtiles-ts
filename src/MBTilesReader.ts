@@ -2,7 +2,7 @@ import * as SQL from 'sql.js';
 
 export default class MBTilesReader {
 
-    private initialized: boolean;
+    private initialized: boolean = false;
     private db: SQL.Database;
 
     private metadataStmt: SQL.Statement;
@@ -21,7 +21,7 @@ export default class MBTilesReader {
             );
             this.initialized = true;
         } catch (e) {
-            throw e;
+            throw new Error(e);
         }
     }
 
@@ -29,66 +29,68 @@ export default class MBTilesReader {
         return this.initialized;
     }
 
-    public getTile(x: number, y: number, z: number): Uint8Array {
-        return this.tilesStmt.getAsObject({
+    public getTile(x: number, y: number, z: number): Uint8Array | null {
+        const data = this.tilesStmt.getAsObject({
             ':x': x,
             ':y': y,
             ':z': z
-        }).tile_data as Uint8Array;
+        }) as { tile_data: Uint8Array } | null
+
+        return data && data.tile_data ? data.tile_data : null;
     }
 
     public getMetadata(key: string) {
         return this.metadataStmt.getAsObject({
             ':key': key
-        });
+        }) as { value: any };
     }
 
-    public get attribution(): string {
-        const value = this.getMetadata('attribution').value.toString();
+    public get attribution(): string | null {
+        const value = this.getMetadata('attribution').value;
 
-        return value ? value : null;
+        return value ? value.toString() : null;
     }
 
-    public get description(): string {
-        const value = this.getMetadata('description').value.toString();
+    public get description(): string | null {
+        const value = this.getMetadata('description').value;
 
-        return value ? value : null;
+        return value ? value.toString() : null;
     }
 
-    public get center(): string[] {
-        const value = this.getMetadata('center').value.toString().split(',');
+    public get center(): string[] | null {
+        const value = this.getMetadata('center').value;
 
-        return value ? value : null;
+        return value ? value.toString().split(',') : null;
     }
 
-    public get format(): string {
-        const value = this.getMetadata('format').value.toString();
+    public get format(): string | null {
+        const value = this.getMetadata('format').value;
 
-        return value ? value : null;
+        return value ? value.toString() : null;
     }
 
-    public get bounds(): string[] {
-        const value = this.getMetadata('bounds').value.toString().split(',');
+    public get bounds(): string[] | null {
+        const value = this.getMetadata('bounds').value;
 
-        return value ? value : null;
+        return value ? value.toString().split(',') : null;
     }
 
-    public get minZoom(): number {
+    public get minZoom(): number | null {
         const value = this.getMetadata('minZoom').value;
 
         return value ? Number(value) : null;
     }
 
-    public get maxZoom(): number {
+    public get maxZoom(): number | null {
         const value = this.getMetadata('maxZoom').value;
 
         return value ? Number(value) : null;
     }
 
-    public get name(): string {
-        const value = this.getMetadata('name').value.toString();
+    public get name(): string | null {
+        const value = this.getMetadata('name').value;
 
-        return value ? value : null;
+        return value ? value.toString() : null;
     }
 
     public close(): void {
