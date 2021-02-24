@@ -90,4 +90,4 @@ this stuff is worth it, you can buy me a beer in return.
 ----------------------------------------------------------------------------
 
 [npm-image]: https://badge.fury.io/js/leaflet-tilelayer-mbtiles-ts.svg
-[npm-url]: https://www.npmjs.com/package/lleaflet-tilelayer-mbtiles-ts
+[npm-url]: https://www.npmjs.com/package/leaflet-tilelayer-mbtiles-ts
