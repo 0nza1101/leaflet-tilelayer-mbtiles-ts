@@ -1,15 +1,16 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
-        "sourceMap": false,
+        "sourceMap": true,
         "target": "es5",
         "module": "commonjs",
         "outDir": "../out-tsc/spec",
+        "esModuleInterop": true
     },
     "include": [
         "./jest-setup.ts",
-        "**/*.spec.ts",
-        "**/*.d.ts",
-        "**/*.mock.ts"
+        "tests/**/*.spec.ts",
+        "node_modules/**/*.d.ts",
+        "tests/**/*.mock.ts"
     ]
 }
