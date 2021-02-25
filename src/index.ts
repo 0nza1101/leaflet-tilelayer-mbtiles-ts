@@ -1,7 +1,6 @@
 import _MBTiles, { MBTilesEvents as _MBTilesEvents } from './MBTiles';
 
-
-declare var L: any;
+declare let L: any;
 
 /**
  * A factory for L.TileLayer.MBTiles
@@ -9,12 +8,13 @@ declare var L: any;
  * @param {L.TileLayerOptions} opts
  * @returns {MBTiles}
  */
-const _mbTiles = (urlOrData: string | ArrayBuffer , opts: L.TileLayerOptions) => Reflect.construct(_MBTiles, [urlOrData, opts]);
+const _mbTiles = (urlOrData: string | ArrayBuffer, opts: L.TileLayerOptions): typeof _MBTiles =>
+  Reflect.construct(_MBTiles, [urlOrData, opts]);
 
 L.TileLayer.MBTiles = _MBTiles;
 L.tileLayer.mbTiles = _mbTiles;
 
-export const MBTiles =  _MBTiles;
+export const MBTiles = _MBTiles;
 export const mbTiles = _mbTiles;
 export const MBTilesEvents = _MBTilesEvents;
 export default { MBTiles, mbTiles, MBTilesEvents };

@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
-require('jest-fetch-mock').enableMocks();
+import { enableFetchMocks } from 'jest-fetch-mock';
 
-(<any>window).URL.createObjectURL = function() {};
+enableFetchMocks();
+(<any>window).URL.createObjectURL = function () {};
