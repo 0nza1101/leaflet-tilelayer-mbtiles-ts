@@ -144,7 +144,7 @@ export default class MBTiles extends L.TileLayer {
         }
         for (const e in this._globalEvents) {
             if (this._globalEvents.hasOwnProperty(e)) {
-                this[bind ? 'on' : 'off'](e, this._globalEvents[e])
+                this[bind ? 'on' : 'off'](e, this._globalEvents[e]);
             }
         }
     }
