@@ -1,8 +1,9 @@
-# Leaflet.TileLayer.MBTiles [![NPM downloads][npm-download-image]][npm-url] [![NPM version][npm-image]][npm-url] [![Codacy Badge][Codacy-image]][Codacy-url] [![contributions welcome][contribution-image]][issue-page] 
+# Leaflet.TileLayer.MBTiles 
+[![Circle CI][circleci-image]][circleci-url] [![NPM downloads][npm-download-image]][npm-url] [![NPM version][npm-image]][npm-url] [![Codacy Badge][Codacy-image]][Codacy-url] [![contributions welcome][contribution-image]][issue-page] 
 
 A [LeafletJS](http://www.leafletjs.com) plugin to load tilesets in [`.mbtiles` format](https://github.com/mapbox/mbtiles-spec).
 
-This rewritten version of the typescript version of Max Battcher [here](https://gitlab.com/WorldMaker/Leaflet.TileLayer.MBTiles)
+This is a rewritten version of the typescript version based on this [fork](https://gitlab.com/WorldMaker/Leaflet.TileLayer.MBTiles)
 This version adds OS platform detection to make it compatible with iOS and Android, since fetch didn't support File URI Schema [see](https://github.com/github/fetch/pull/92#issuecomment-140665932)..
 
 ## Installing
@@ -104,3 +105,6 @@ MIT
 
 [Codacy-image]: https://app.codacy.com/project/badge/Grade/4e6407ff274c41e1afabe02e75c582b0
 [Codacy-url]: https://www.codacy.com/gh/0nza1101/leaflet-tilelayer-mbtiles-ts/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=0nza1101/leaflet-tilelayer-mbtiles-ts&amp;utm_campaign=Badge_Grade
+
+[circleci-image]: https://circleci.com/gh/0nza1101/leaflet-tilelayer-mbtiles-ts/tree/master.svg?style=shield
+[circleci-url]: https://circleci.com/gh/0nza1101/leaflet-tilelayer-mbtiles-ts/tree/master
