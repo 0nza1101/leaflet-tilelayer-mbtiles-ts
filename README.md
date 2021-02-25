@@ -3,6 +3,8 @@ This version adds OS platform detection to make it compatible with iOS and Andro
 
 # Leaflet.TileLayer.MBTiles [![NPM version][npm-image]][npm-url]
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9073cdcfae22422eb16bc8c98fa52678)](https://app.codacy.com/gh/0nza1101/leaflet-tilelayer-mbtiles-ts?utm_source=github.com&utm_medium=referral&utm_content=0nza1101/leaflet-tilelayer-mbtiles-ts&utm_campaign=Badge_Grade_Settings)
+
 A [LeafletJS](http://www.leafletjs.com) plugin to load tilesets in [`.mbtiles` format](https://github.com/mapbox/mbtiles-spec).
 
 ## Exemple
