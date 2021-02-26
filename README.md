@@ -1,4 +1,4 @@
-# Leaflet.TileLayer.MBTiles 
+# 🌍 Leaflet.TileLayer.MBTiles 
 [![Circle CI][circleci-image]][circleci-url] [![NPM downloads][npm-download-image]][npm-url] [![NPM version][npm-image]][npm-url] [![Codacy Badge][Codacy-image]][Codacy-url] [![contributions welcome][contribution-image]][issue-page] 
 
 A [LeafletJS](http://www.leafletjs.com) plugin to load tilesets in [`.mbtiles` format](https://github.com/mapbox/mbtiles-spec).
@@ -23,15 +23,15 @@ Via Yarn:
      * [`URL.createObjectURL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL)
      * [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), or use a [polyfill](https://github.com/github/fetch)
      * [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array)
-
-## Compatibility
 ## Exemple
 
-The following demo loads a ~9.6MB `.mbtiles` file with the "countries" style from the good ol' Tilemill:
+The following exemple loads a ~9.6MB `.mbtiles` file with the "countries" style from the good ol' Tilemill:
 
 *  Clone this repository: https://github.com/0nza1101/leaflet-tilelayer-mbtiles-ts.git
 *  Run `npm install` from the project root.
 *  `npm start`
+
+See also [ionic5-leaflet-mbtiles](https://github.com/0nza1101/ionic5-leaflet-mbtiles) for a Ionic sample app.
 ## Using the plugin
 ```javascript
     // Using the constructor...
@@ -39,6 +39,15 @@ The following demo loads a ~9.6MB `.mbtiles` file with the "countries" style fro
     
     // ... or use the factory
     mbtiles = L.tileLayer.mbtiles('http://server/something/cool-stuff.mbtiles', options);
+
+    // Possible events
+    mbtiles.on('databaseloaded', (ev) => {
+        console.info('MBTiles DB loaded', ev);
+    });
+
+    mbtiles.on('databaseerror', (ev) => {
+        console.info('MBTiles DB error', ev);
+    });
     
     mbtiles.addTo(map);
 ```
