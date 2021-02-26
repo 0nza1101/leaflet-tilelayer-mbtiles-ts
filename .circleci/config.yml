@@ -60,6 +60,9 @@ workflows:
             - build
       - hold:
           type: approval
+          filters:
+            branches:
+              only: master
           requires:
            - test
       - deploy:
