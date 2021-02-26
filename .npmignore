@@ -12,9 +12,10 @@ exemple/
 #Files
 *.log
 .eslintrc
+.eslintrc.json
 .eslintignore
 .npmignore
 .gitignore
 .prettierrc
 jest.config.js
-ts.config.json
+tsconfig.json
