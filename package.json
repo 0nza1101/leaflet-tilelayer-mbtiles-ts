@@ -1,6 +1,6 @@
 {
   "name": "leaflet-tilelayer-mbtiles-ts",
-  "version": "1.5.7",
+  "version": "1.5.8",
   "description": "Load MBTiles packages into Leaflet maps (Typescript fork)",
   "keywords": [
     "leaflet",
