@@ -48,10 +48,10 @@ With ES6 imports
     import { MBTiles, mbtiles } from 'leaflet-tilelayer-mbtiles-ts';
 
     // Using the constructor...
-    let mbtiles = new MBTiles('http://server/something/cool-stuff.mbtiles', options);
+    let mbtiles = new MBTiles('./assets/mysuperfile.mbtiles', options);
     
     // ... or use the factory
-    mbtiles = mbtiles('http://server/something/cool-stuff.mbtiles', options);
+    mbtiles = mbtiles('./assets/mysuperfile.mbtiles', options);
     
     mbtiles.addTo(map);
 ```
@@ -60,10 +60,10 @@ Global
     import 'leaflet-tilelayer-mbtiles-ts';
 
     // Using the constructor...
-    let mbtiles = new L.TileLayer.MBTiles('http://server/something/cool-stuff.mbtiles', options);
+    let mbtiles = new L.TileLayer.MBTiles('./assets/mysuperfile.mbtiles', options);
     
     // ... or use the factory
-    mbtiles = L.tilelayer.mbtiles('http://server/something/cool-stuff.mbtiles', options);
+    mbtiles = L.tilelayer.mbtiles('./assets/mysuperfile.mbtiles', options);
     
     mbtiles.addTo(map);
 ```
