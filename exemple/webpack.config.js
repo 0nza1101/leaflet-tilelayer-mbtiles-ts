@@ -12,7 +12,7 @@ module.exports = {
         filename: 'bundle.js'
     },
     devServer: {
-        contentBase: publicPath,
+        static: publicPath,
         compress: true,
         compress: true,
         hot: true,

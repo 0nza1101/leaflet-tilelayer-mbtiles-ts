@@ -8,7 +8,8 @@
         "moduleResolution": "node",
         "outDir": "./dist",
         "typeRoots": ["./node_modules/@types/"],
-        "pretty": true
+        "pretty": true,
+        "noImplicitThis": false
     },
     "include": [
         "./src/**/*.ts"

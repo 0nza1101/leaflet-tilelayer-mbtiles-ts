@@ -1,5 +1,5 @@
 import * as L from "leaflet";
-import "../../dist/index";
+import "../../src/index";
 
 const map = L.map("map", {
   center: [48.864716, 2.349014],

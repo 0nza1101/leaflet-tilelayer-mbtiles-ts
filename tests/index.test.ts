@@ -1,8 +1,8 @@
 import * as L from 'leaflet';
-import path from 'path';
+import * as path from 'path';
 import fetchMock from 'jest-fetch-mock';
-import { MBTiles, mbTiles as mbtilesFactory, MBTilesEvents } from '../dist/index';
-import MBTilesReader from '../dist/MBTilesReader';
+import { MBTiles, mbTiles as mbtilesFactory, MBTilesEvents } from '../src/index';
+import MBTilesReader from '../src/MBTilesReader';
 
 jest.mock('sql.js', () => {
   const sample = {

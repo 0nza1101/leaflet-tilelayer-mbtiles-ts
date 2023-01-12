@@ -36,7 +36,7 @@ export default class MBTilesReader {
     return data && data.tile_data ? data.tile_data : null;
   }
 
-  public getMetadata(key: string) {
+  public getMetadata(key: string): ReturnType<SQL.Statement['getAsObject']> {
     return this.metadataStmt.getAsObject({
       ':key': key,
     }) as { value: string };

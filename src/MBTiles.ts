@@ -7,7 +7,9 @@ export enum MBTilesEvents {
   ERROR = 'databaseerror',
 }
 
-type TooglableEvent = { [event: string]: (event?: any) => void };
+type TooglableEvent = {
+  [event: string]: (event?: any) => void;
+};
 
 /**
  * Builds the MBTiles tileLayer
@@ -15,10 +17,10 @@ type TooglableEvent = { [event: string]: (event?: any) => void };
  * @extends {L.TileLayer}
  */
 export default class MBTiles extends L.TileLayer {
-  public _map: L.Map = null;
-  private _mbTilesReader: MBTilesReader = null;
+  public _map!: L.Map;
+  private _mbTilesReader: MBTilesReader | null = null;
   private _imageFormat = 'image/png';
-  private _globalEvents: TooglableEvent = null;
+  private _globalEvents: TooglableEvent | null = null;
 
   constructor(urlOrData: string | ArrayBuffer, options?: L.TileLayerOptions) {
     super(typeof urlOrData === 'string' ? urlOrData : '', options);
@@ -68,14 +70,16 @@ export default class MBTiles extends L.TileLayer {
   }
 
   getTileUrl(coords: L.Coords): string {
-    const data = this._mbTilesReader.getTile(
-      coords.x,
-      (<any>this)._globalTileRange.max.y - coords.y,
-      coords.z
-    );
+    if (this._mbTilesReader) {
+      const data = this._mbTilesReader.getTile(
+        coords.x,
+        (<any>this)._globalTileRange.max.y - coords.y,
+        coords.z
+      );
 
-    if (data) {
-      return window.URL.createObjectURL(new Blob([data], { type: this._imageFormat }));
+      if (data) {
+        return window.URL.createObjectURL(new Blob([data], { type: this._imageFormat }));
+      }
     }
 
     return L.Util.emptyImageUrl;
@@ -91,7 +95,6 @@ export default class MBTiles extends L.TileLayer {
         this._openMBTile(buffer);
       } catch (err) {
         this.fire(MBTilesEvents.ERROR, { error: err });
-        throw new Error(err);
       }
     } else if (urlOrData instanceof ArrayBuffer) {
       this._openMBTile(urlOrData);
@@ -127,7 +130,6 @@ export default class MBTiles extends L.TileLayer {
       this.fire(MBTilesEvents.LOADED);
     } catch (err) {
       this.fire(MBTilesEvents.ERROR, { error: err });
-      throw new Error(err);
     }
   }
 
@@ -156,7 +158,7 @@ export default class MBTiles extends L.TileLayer {
   }
 
   private _shutdown() {
-    if (this._mbTilesReader.isLoaded) {
+    if (this._mbTilesReader && this._mbTilesReader.isLoaded) {
       this._mbTilesReader.close();
       this._toggleEvents(false);
       this._mbTilesReader = null;

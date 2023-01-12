@@ -1,0 +1,10 @@
+{
+  "preset": "ts-jest",
+  "testEnvironment": "jsdom",
+  "transform": {
+    "^.+\\.[tj]sx?$": ["ts-jest", {
+      "tsconfig": "./tests/tsconfig.spec.json"
+    }]
+  },
+  "setupFilesAfterEnv": ["./tests/jest.setup.ts"]
+}
