@@ -22,7 +22,7 @@ jest.mock('sql.js', () => {
   };
 });
 
-describe('Create a leaflet TileLayer using a .mbtiles file', () => {
+describe('create a leaflet TileLayer using a .mbtiles file', () => {
   const url: string = path.resolve(
     'file://',
     __dirname,
@@ -33,16 +33,16 @@ describe('Create a leaflet TileLayer using a .mbtiles file', () => {
     fetchMock.resetMocks();
   });
 
-  it('Should expose a factory to create new instances', () => {
+  it('should expose a factory to create new instances', () => {
     const instance = mbtilesFactory(url, {});
     expect(instance).toBeInstanceOf(MBTiles);
   });
 
-  describe('Should follow all the Layer interface', () => {
+  describe('should follow all the Layer interface', () => {
     let map: L.Map;
     beforeEach(() => (map = L.map(document.createElement('div'))));
 
-    it('Should be able to add it to a map', () => {
+    it('should be able to add it to a map', () => {
       const mb = new MBTiles(url, {});
       expect(map.hasLayer(mb)).toBeFalsy();
 
@@ -50,7 +50,7 @@ describe('Create a leaflet TileLayer using a .mbtiles file', () => {
       expect(map.hasLayer(mb)).toBeTruthy();
     });
 
-    it('Should be removable from maps', () => {
+    it('should be removable from maps', () => {
       const mb = new MBTiles(url, {});
       map.addLayer(mb);
       expect(map.hasLayer(mb)).toBeTruthy();
@@ -59,7 +59,7 @@ describe('Create a leaflet TileLayer using a .mbtiles file', () => {
       expect(map.hasLayer(mb)).toBeFalsy();
     });
 
-    it('Should be removable from the current map', () => {
+    it('should be removable from the current map', () => {
       const mb = new MBTiles(url, {});
       map.addLayer(mb);
       expect(map.hasLayer(mb)).toBeTruthy();
@@ -68,7 +68,7 @@ describe('Create a leaflet TileLayer using a .mbtiles file', () => {
       expect(map.hasLayer(mb)).toBeFalsy();
     });
 
-    it('Should be able to bind custom events', () => {
+    it('should be able to bind custom events', () => {
       const mb = new MBTiles(url, {});
       const onSpy = jest.spyOn(mb, 'on');
       const fireSpy = jest.spyOn(mb, 'fire');
@@ -94,7 +94,7 @@ describe('Create a leaflet TileLayer using a .mbtiles file', () => {
     });
   });
 
-  describe('Should follow all the TileLayer interface', () => {
+  describe('should follow all the TileLayer interface', () => {
     const options: L.TileLayerOptions = { minZoom: 0, maxZoom: 6 };
     let mbTiles: any;
     let map: L.Map;
@@ -103,7 +103,7 @@ describe('Create a leaflet TileLayer using a .mbtiles file', () => {
       mbTiles = new MBTiles(url, options).addTo(map);
     });
 
-    it('Should be able to set new options', () => {
+    it('should be able to set new options', () => {
       const newOptions = { minZoom: 2 };
       mbTiles.initialize(null, newOptions);
 
@@ -111,7 +111,7 @@ describe('Create a leaflet TileLayer using a .mbtiles file', () => {
       expect(mbTiles.options.maxZoom).toEqual(options.maxZoom);
     });
 
-    it('Should be able to provide tile on given L.Coords', () => {
+    it('should be able to provide tile on given L.Coords', () => {
       jest.spyOn(MBTilesReader.prototype, 'getTile').mockReturnValueOnce(null);
       expect(mbTiles.getTileUrl({ x: 0, y: 0, z: 0 } as L.Coords)).toBe(L.Util.emptyImageUrl);
 
