@@ -1,5 +1,5 @@
 # 🌍 Leaflet.TileLayer.MBTiles 
-[![Circle CI][circleci-image]][circleci-url] [![NPM downloads][npm-download-image]][npm-url] [![NPM version][npm-image]][npm-url] [![Codacy Badge][Codacy-image]][Codacy-url] [![contributions welcome][contribution-image]][issue-page] 
+[![Circle CI][actions-image]][actions-url] [![NPM downloads][npm-download-image]][npm-url] [![NPM version][npm-image]][npm-url] [![Codacy Badge][Codacy-image]][Codacy-url] [![contributions welcome][contribution-image]][issue-page] 
 
 A [LeafletJS](http://www.leafletjs.com) plugin to load tilesets in [`.mbtiles` format](https://github.com/mapbox/mbtiles-spec).
 
@@ -115,5 +115,5 @@ MIT
 [Codacy-image]: https://app.codacy.com/project/badge/Grade/4e6407ff274c41e1afabe02e75c582b0
 [Codacy-url]: https://www.codacy.com/gh/0nza1101/leaflet-tilelayer-mbtiles-ts/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=0nza1101/leaflet-tilelayer-mbtiles-ts&amp;utm_campaign=Badge_Grade
 
-[circleci-image]: https://circleci.com/gh/0nza1101/leaflet-tilelayer-mbtiles-ts/tree/master.svg?style=shield
-[circleci-url]: https://circleci.com/gh/0nza1101/leaflet-tilelayer-mbtiles-ts/tree/master
+[actions-image]: https://github.com/0nza1101/leaflet-tilelayer-mbtiles-ts/actions/workflows/ci.yml/badge.svg?branch=master
+[actions-url]: https://github.com/0nza1101/leaflet-tilelayer-mbtiles-ts/actions/workflows/ci.yml

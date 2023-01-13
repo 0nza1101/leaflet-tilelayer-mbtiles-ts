@@ -1,0 +1,50 @@
+name: CI
+
+on:
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
+
+jobs:
+    test:
+        if: "!contains(github.event.head_commit.message, 'ci skip')"
+
+        strategy:
+            matrix:
+                os: [ubuntu-latest, windows-latest]
+                node-version: [lts/*]
+
+        runs-on: ${{ matrix.os }}
+
+        # Steps represent a sequence of tasks that will be executed as part of the job
+        steps:
+            # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+            - uses: actions/checkout@v3
+
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: Install deps
+              run: npm ci
+
+            # Runs a set of commands using the runners shell
+            - name: Build and Test
+              run: npm run test:ci
+
+    release:
+        runs-on: ubuntu-latest
+        needs: ['test']
+        if: "!contains(github.event.head_commit.message, 'skip-release') && !contains(github.event.head_commit.message, 'skip-ci') && github.event_name != 'pull_request'"
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: lts/*
+            - run: npm ci
+            - run: npm run build
+            - run: npx semantic-release --branches master
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
