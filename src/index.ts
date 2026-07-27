@@ -2,6 +2,15 @@ import _MBTiles, { MBTilesEvents as _MBTilesEvents } from './MBTiles';
 
 declare let L: any;
 
+declare module 'leaflet' {
+  namespace TileLayer {
+    class MBTiles extends import('./MBTiles').default {}
+  }
+  interface TileLayer {
+    mbTiles: (urlOrData: string | ArrayBuffer, opts?: L.TileLayerOptions) => TileLayer.MBTiles;
+  }
+}
+
 /**
  * A factory for L.TileLayer.MBTiles
  * @param {string | ArrayBuffer} urlOrData
